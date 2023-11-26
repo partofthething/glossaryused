@@ -1,0 +1,60 @@
+[build-system]
+requires = ["flit_core>=3.4"]
+build-backend = "flit_core.buildapi"
+
+[project]
+name = "sphinxcontrib.glossaryused"
+authors = [
+  { name="Nick Touran", email="nick@partofthething.com" },
+]
+dynamic=["version", "description"]
+readme = "README.rst"
+requires-python = ">=3.8"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+]
+dependencies = [
+    "sphinx",
+]
+
+[project.urls]
+Homepage = "https://github.com/partofthething/sphinxcontrib-glossaryused"
+Issues = "https://github.com/sphinxcontrib-glossaryused/issues"
+
+[project.optional-dependencies]
+test = [
+    "pytest"
+]
+dev = [
+    "ruff"
+]
+
+[tool.tox]
+legacy_tox_ini = """
+    [tox]
+    min_version = 4.0
+    env_list =
+        py310
+        py39
+        type
+
+    [testenv]
+    deps = pytest
+    commands = pytest tests
+
+    [testenv:type]
+    deps = mypy
+    commands = mypy src
+"""
+
+[tool.ruff]
+fix = true
+
+[tool.ruff.lint]
+select = ["E4", "E7", "E9", "F", "W", "C901", "I", "N", "D", "B", "A", "DTZ", "Q", "RET", "SIM"]
+unfixable = ["F401"]
+
+[tool.ruff.lint.pydocstyle]
+convention = "numpy"
