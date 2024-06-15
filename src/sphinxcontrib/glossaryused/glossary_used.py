@@ -31,7 +31,7 @@ def find_referenced_terms(app, doctree):
         if not hasattr(node.children[0], "attributes"):
             continue
         if "std-term" in node.children[0].attributes.get("classes", []):
-            term = node.astext()
+            term = node.astext().lower()
             env.glossary_referenced_terms.add(term)
 
 
@@ -65,7 +65,7 @@ class GlossaryReferencedFilterer(SphinxTransform):
             filtered_definition_list = cast(nodes.definition_list, [])
 
             for definition in definition_list:
-                term = definition[0].astext()
+                term = definition[0].astext().lower()
                 if term in referenced:
                     filtered_definition_list.append(definition)
             definition_list[:] = filtered_definition_list
