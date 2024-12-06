@@ -31,7 +31,7 @@ def find_referenced_terms(app, doctree):
         if not hasattr(node.children[0], "attributes"):
             continue
         if "std-term" in node.children[0].attributes.get("classes", []):
-            term = node.astext().lower()
+            term = node.attributes["reftarget"].lower()
             env.glossary_referenced_terms.add(term)
 
 
@@ -49,9 +49,11 @@ def merge_referenced(app, env, docnames, other):
 
 
 class GlossaryReferencedFilterer(SphinxTransform):
-    """Filter glossaries so that only terms that are actually referenced in the text show up.
+    """
+    Filter glossaries showing only terms that are referenced in the text.
 
-    This is a post-processing transform that occurs after all xrefs are resolved.
+    This is a post-processing transform that occurs after all xrefs are
+    resolved.
     """
 
     default_priority = 500
